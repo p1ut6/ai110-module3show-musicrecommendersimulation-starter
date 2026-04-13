@@ -1,4 +1,4 @@
-# Model Card: Music Recommender Simulation
+code = '''# Model Card: Music Recommender Simulation
 
 ## 1. Model Name
 **VibeFinder 1.0** — a rule-based music recommender that matches songs to user taste profiles.
@@ -46,3 +46,8 @@ Four user profiles were tested: High-Energy Pop, Chill Lofi, Deep Intense Rock, 
 
 ## 9. Personal Reflection
 The biggest learning moment in this project was realizing how much the quality of recommendations depends on the data, not just the algorithm. Even with a well-designed scoring system, a 10-song catalog with 60% pop songs will always over-serve pop fans and under-serve everyone else. AI tools helped speed up the implementation significantly, but I had to double-check the output every step of the way because the generated code sometimes mixed up variables or produced syntactically broken files. The most surprising thing was how quickly a few simple math rules started to feel like real recommendations. Seeing Sunrise City score 9.47 for a happy pop profile felt genuinely correct, even though the logic behind it is just addition and one exponential curve. If I extended this project I would add a feedback mechanism where users can thumbs up or down results, and use that signal to adjust the weights automatically over time.
+'''
+
+with open("model_card.md", "w", encoding="utf-8") as f:
+    f.write(code)
+print("Done!")
