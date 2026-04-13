@@ -17,17 +17,58 @@ Replace this paragraph with your own summary of what your version does.
 
 ## How The System Works
 
-Explain your design in plain language.
+This is a **content-based music recommender** that suggests songs similar to what a user likes, based on song attributes from our dataset. It doesn't use other users' data—just the characteristics of the songs themselves.
 
-Some prompts to answer:
+### Song Features
+Each song is represented by:
+- **Categorical**: genre (e.g., pop, rock, lofi) and mood (e.g., happy, intense, chill)
+- **Numerical (0-1 scale)**: energy, valence, danceability, acousticness
+- **Continuous**: tempo_bpm (beats per minute)
 
-- What features does each `Song` use in your system
-  - For example: genre, mood, energy, tempo
-- What information does your `UserProfile` store
-- How does your `Recommender` compute a score for each song
-- How do you choose which songs to recommend
+### User Profile
+The user profile stores:
+- Favorite genre and mood (exact match preferences)
+- Target energy level (0-1)
+- Acoustic preference (boolean)
 
-You can include a simple diagram or bullet list if helpful.
+### Scoring Algorithm Recipe
+
+For each song, we calculate a total score out of ~9.5 points:
+
+| Component | Points | How It Works |
+|-----------|--------|-------------|
+| **Genre Match** | +2.0 | Exact match to favorite genre |
+| **Mood Match** | +1.0 | Exact match to favorite mood |
+| **Energy Similarity** | 0–3.0 | Gaussian curve: rewards closeness to target energy. Formula: `3.0 × exp(-(diff²) / (2 × 0.15²))` |
+| **Acousticness Preference** | 0–2.0 | If user likes acoustic: +2.0 if acousticness > 0.6. Otherwise: +2.0 if acousticness < 0.4 |
+| **Danceability Bonus** | +0.75 | +0.75 if target energy > 0.7 AND danceability > 0.7 |
+| **Valence Bonus** | +0.75 | +0.75 if valence > 0.65 (uplifting/positive) |
+
+**Ranking Rule**: Score all songs, sort descending, return top N (default: 5).
+
+### Example Workflow
+```
+User Profile: {genre: "rock", mood: "intense", energy: 0.88, likes_acoustic: false}
+  ↓
+Score Song 1 "Storm Runner" (rock, intense, 0.91 energy) → 6.8 pts
+Score Song 2 "Focus Flow" (lofi, focused, 0.40 energy) → 0.9 pts
+  ↓
+Rank by score
+  ↓
+Recommend top 5
+```
+
+### Expected Biases & Limitations
+
+⚠️ **This system may over-prioritize genre**. A rock user will rarely see pop recommendations, even if a pop song has near-perfect energy/mood alignment.
+
+⚠️ **It ignores diversity**. If a user likes "rock/intense," they'll get 5 similar rock songs, all with high energy—no exploration of adjacent genres.
+
+⚠️ **Small catalog bias**. With only 10 songs (soon 18+), matching rare mood/genre combinations is unlikely. Real systems have millions of songs.
+
+⚠️ **No lyrical or thematic understanding**. Two songs can have identical energy/valence but totally different themes (e.g., "Gym Hero" vs. "Night Drive Loop").
+
+⚠️ **Exact mood/genre matching is brittle**. A song labeled "chill" vs. "relaxed" might be musically identical but score differently.
 
 ---
 
