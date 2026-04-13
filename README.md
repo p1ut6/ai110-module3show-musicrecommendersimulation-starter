@@ -107,6 +107,53 @@ You can add more tests in `tests/test_recommender.py`.
 
 ---
 
+## Example Output
+
+When you run `python -m src.main`, the recommender generates personalized recommendations with scores and detailed explanations:
+
+```
+Top recommendations:
+
+#1: Sunrise City by Neon Echo
+Score: 8.30
+Why:
+  • Genre match: pop
+  • Mood match: happy
+  • Energy similarity: 2.97 (your target: 0.8, song: 0.82)
+  • Non-acoustic preference matched: 0.18
+  • High-energy danceability bonus
+  • Positive/uplifting vibe bonus
+
+#2: Gym Hero by Max Pulse
+Score: 7.56
+Why:
+  • Genre match: pop
+  • Energy similarity: 2.06 (your target: 0.8, song: 0.93)
+  • Non-acoustic preference matched: 0.05
+  • High-energy danceability bonus
+  • Positive/uplifting vibe bonus
+
+#3: Rooftop Lights by Indigo Parade
+Score: 7.40
+Why:
+  • Mood match: happy
+  • Energy similarity: 2.9 (your target: 0.8, song: 0.76)
+  • Non-acoustic preference matched: 0.35
+  • High-energy danceability bonus
+  • Positive/uplifting vibe bonus
+
+#4: Night Drive Loop by Neon Echo
+Score: 5.59
+Why:
+  • Energy similarity: 2.84 (your target: 0.8, song: 0.75)
+  • Non-acoustic preference matched: 0.22
+  • High-energy danceability bonus
+```
+
+Each recommendation includes a **transparency breakdown**: users can see exactly which features matched and why each song ranked higher than others.
+
+---
+
 ## Experiments You Tried
 
 Use this section to document the experiments you ran. For example:

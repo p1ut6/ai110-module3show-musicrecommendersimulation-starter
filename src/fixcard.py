@@ -1,4 +1,4 @@
-# Model Card: Music Recommender Simulation
+code = '''# Model Card: Music Recommender Simulation
 
 ## 1. Model Name
 **VibeFinder 1.0**
@@ -46,3 +46,8 @@ Four user profiles were tested: High-Energy Pop, Chill Lofi, Deep Intense Rock, 
 
 ## 9. Personal Reflection
 Building VibeFinder made it clear how much a recommendation system depends on the quality and diversity of its data. Even a well-designed scoring algorithm produces mediocre results when the catalog is too small or unbalanced. The most interesting discovery was the adversarial profile: when preferences conflict, scores drop across the board and the system quietly returns its best guess without any indication that it struggled. Real recommendation systems likely face this problem constantly with users who have complex or contradictory tastes.
+'''
+
+with open("model_card.md", "w", encoding="utf-8") as f:
+    f.write(code)
+print("Done!")
